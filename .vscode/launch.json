@@ -2,11 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch localhost",
-            "type": "chrome",
+            "name": "Launch Edge",
             "request": "launch",
+            "type": "msedge",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
-        }
-    ]
+        },
+  ]
 }
