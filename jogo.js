@@ -90,12 +90,74 @@ const flapyBird = {
     }
 }
 
+// [mensagemGetReady]
+const mensagemGetReady = {
+    spriteX: 134,
+    SpriteY: 0,
+    largura: 174,
+    altura: 152,
+    x: (canvas.width / 2) - 174 / 2,
+    y: 50,
+    desenha() {
+        contexto.drawImage(
+            sprites,
+            mensagemGetReady.spriteX, mensagemGetReady.SpriteY, // Sprite X, Sprite Y
+            mensagemGetReady.largura, mensagemGetReady.altura, // Tamanho do recorte na sprite
+            mensagemGetReady.x, mensagemGetReady.y,
+            mensagemGetReady.largura, mensagemGetReady.altura,
+        );
+    }
+}
+
+//
+// [Telas]
+//
+
+let telaAtiva = {};
+function mudaParaTela(novaTela) {
+    telaAtiva = novaTela;
+}
+
+const Telas = {
+    INICIO: {
+        desenha() {
+            planoDeFundo.desenha();
+            chao.desenha();
+            flapyBird.desenha();
+            mensagemGetReady.desenha();
+        },
+        click() {
+            mudaParaTela(Telas.JOGO);
+        },
+        atualiza() {
+        
+        }
+    }
+};
+
+Telas.JOGO = {
+    desenha() {
+        planoDeFundo.desenha();
+        chao.desenha();
+        flapyBird.desenha();
+    },
+    atualiza() {
+        flapyBird.atualiza();
+    }
+}
+
 function loop() {
-    flapyBird.atualiza();    
-    planoDeFundo.desenha();
-    chao.desenha();
-    flapyBird.desenha();
+    telaAtiva.desenha();
+    telaAtiva.atualiza();
+
     requestAnimationFrame(loop);
 }
 
+window.addEventListener('click', function() {
+    if (telaAtiva.click) {
+        telaAtiva.click();
+    }
+}
+
+mudaParaTela(Telas.INICIO);
 loop();
